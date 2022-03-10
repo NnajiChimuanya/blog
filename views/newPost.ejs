@@ -37,21 +37,23 @@
 
 
     <div class="container mt-5">
-        <form>
-            <div class="mb-3">
-                <label>Title :</label>
+        <form action="/newPost" method="POST">
+            <!-- <div class="mb-3">
+                <label>Image :</label>
                 <input type="file" class="form-control">
-            </div>
+            </div> -->
 
             <div class="mb-3">
                 <label>Title :</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="title">
             </div>
     
             <div class="mb-3">
                 <label>Body :</label>
-                <textarea class="form-control"></textarea>
+                <textarea class="form-control" name="body"></textarea>
             </div>
+
+            <a class="btn btn-secondary" href="/" role="button"> Cancel </a>
     
             <button type="submit" >Post</button>
         </form>
