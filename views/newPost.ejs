@@ -37,11 +37,11 @@
 
 
     <div class="container mt-5">
-        <form action="/newPost" method="POST">
-            <!-- <div class="mb-3">
+        <form action="/newPost" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
                 <label>Image :</label>
-                <input type="file" class="form-control">
-            </div> -->
+                <input type="file" class="form-control" name="uploadedImage">
+            </div>
 
             <div class="mb-3">
                 <label>Title :</label>
@@ -50,7 +50,7 @@
     
             <div class="mb-3">
                 <label>Body :</label>
-                <textarea class="form-control" name="body"></textarea>
+                <textarea class="form-control mark-down" name="body"></textarea>
             </div>
 
             <a class="btn btn-secondary" href="/" role="button"> Cancel </a>

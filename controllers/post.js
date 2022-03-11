@@ -1,8 +1,20 @@
 const mongoose = require("mongoose")
 const posts = require("../models/postModel")
-const bodyParser = require("body-parser")
 const express = require("express")
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+const multer = require("multer")
+
+const storage = multer.diskStorage({
+    destination : function(req, file, cb) {
+        cb(null, "../public/data/uploads")
+    },
+    filename : function(req, file, cb) {
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9)
+        cb(null, file.fieldname + "-" + uniqueSuffix)
+    }
+})
+const upload = multer({storage : storage})
+
 
 const  router = express.Router()
 
@@ -43,11 +55,15 @@ router.get("/", (req, res) => res.render("index", {data : data}))
 
 router.get("/newPost", (req, res) => res.render("newPost"))
 
-router.post("/newPost", urlencodedParser,  (req, res) => {
+router.post("/newPost", upload.single("uploadedImage"),  (req, res) => {
     let title = req.body.title
     let body = req.body.body
 
+    console.log(req.file, req.body)
+
     let post = new posts({
+        image : req.file.originalname,
+        imagePath : req.file.path,
         title : title,
         body : body
     })
