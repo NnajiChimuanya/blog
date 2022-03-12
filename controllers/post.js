@@ -6,11 +6,11 @@ const multer = require("multer")
 
 const storage = multer.diskStorage({
     destination : function(req, file, cb) {
-        cb(null, "../public/data/uploads")
+        cb(null, "./public/data/uploads")
     },
     filename : function(req, file, cb) {
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9)
-        cb(null, file.fieldname + "-" + uniqueSuffix)
+        cb(null, file.fieldname + "-" + uniqueSuffix + "-" + file.originalname)
     }
 })
 const upload = multer({storage : storage})
@@ -51,7 +51,12 @@ try {
 
 
 
-router.get("/", (req, res) => res.render("index", {data : data}))
+router.get("/", (req, res) => {
+    posts.find({}, (err, data) => {
+        if(err) throw err
+        res.render("index", { data : data})
+    })
+})
 
 router.get("/newPost", (req, res) => res.render("newPost"))
 
@@ -62,8 +67,7 @@ router.post("/newPost", upload.single("uploadedImage"),  (req, res) => {
     console.log(req.file, req.body)
 
     let post = new posts({
-        image : req.file.originalname,
-        imagePath : req.file.path,
+        image : req.file.filename,
         title : title,
         body : body
     })

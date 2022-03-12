@@ -4,9 +4,6 @@ const postSchema = new mongoose.Schema({
     image : {
         type : String
     },
-    imagePath : {
-        type : String
-    },
     title : {
         type : String,
         required : true
@@ -14,6 +11,10 @@ const postSchema = new mongoose.Schema({
     body : {
         type : String,
         required : true
+    },
+    createdAt : {
+        type : String,
+        default : (new Date()).toLocaleString()
     }
 })
 

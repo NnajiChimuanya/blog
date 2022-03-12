@@ -84,10 +84,11 @@
     <div class="row">
       <% data.forEach(item => { %>
         <div class="card col-6" style="width: 18rem;">
-          <img src="pen.jpg" class="card-img-top" alt="...">
+          <img src= '<%= item.image %>' class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title"> <%=  item.title   %>  </h5>
-            <p class="card-text">  <%=  item.about   %>   </p>
+            <p class="card-text">  <%=  item.body   %>   </p>
+            <p> <%= item.createdAt %></p>
           </div>
           
           <div class="card-body">
