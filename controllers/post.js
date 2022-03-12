@@ -6,7 +6,7 @@ const multer = require("multer")
 
 const storage = multer.diskStorage({
     destination : function(req, file, cb) {
-        cb(null, "./public/data/uploads")
+        cb(null, "./public/")
     },
     filename : function(req, file, cb) {
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9)
@@ -19,25 +19,6 @@ const upload = multer({storage : storage})
 const  router = express.Router()
 
 
-const data = [
-    {
-        title : "NaySayer",
-        about : "jnkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkknnnnnnnnnnnnnnnnnnnnnnndddddd"
-    },
-    {
-        tithle : " Try This out",
-        about : "HHJBJBknkjjknkjnjnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-    },
-    {
-        tithle : " Try This out",
-        about : "HHJBJBknkjjknkjnjnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-    },
-    {
-        tithle : " Try This out",
-        about : "HHJBJBknkjjknkjnjnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-    },
-    
-]
 //database connection
 try {
     mongoose.connect("mongodb://localhost:27017/blog")
@@ -73,8 +54,14 @@ router.post("/newPost", upload.single("uploadedImage"),  (req, res) => {
     })
     post.save((err, data) => {
         if(err) throw err
-        res.json(data)
+        res.redirect(`/post/${data._id}`)
     })
 } )
+
+router.get("/post/:id", (req, res) => {
+    posts.findById({_id : req.params.id}, (err, data) => {
+        res.render("post", {data : data})
+    })
+})
 
 module.exports = router
