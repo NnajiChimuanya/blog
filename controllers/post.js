@@ -6,7 +6,7 @@ const multer = require("multer")
 
 const storage = multer.diskStorage({
     destination : function(req, file, cb) {
-        cb(null, "./public/")
+        cb(null, "./public/images/")
     },
     filename : function(req, file, cb) {
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9)
@@ -58,10 +58,24 @@ router.post("/newPost", upload.single("uploadedImage"),  (req, res) => {
     })
 } )
 
-router.get("/post/:id", (req, res) => {
-    posts.findById({_id : req.params.id}, (err, data) => {
-        res.render("post", {data : data})
-    })
+router.get("/post/:id", async (req, res) => {
+    let id = req.params.id
+
+    if(mongoose.Types.ObjectId.isValid(id)) {
+        posts.findById(id, (err, data) => {
+            if(err) throw err
+            console.log(data)
+            res.render("post", { data : data})
+            
+        })
+    }
+
+
+   
+        
+        
+    
+    
 })
 
 module.exports = router

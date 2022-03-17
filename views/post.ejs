@@ -9,12 +9,22 @@
     <title>My Blog</title>
 </head>
 <body>
+    <div class="card mb-3">
+        <img src= '/images/<%= data.image %>' class="card-img-top" alt="..." height="500">
+        <div class="card-body">
+          <h5 class="card-title">   <%= data.title %>  </h5>
+          <p class="card-text">   <p>    <%= data.body %> </p>  </p>
+          <p class="card-text"><small class="text-muted">  <p>    <%= data.createdAt %> </p>  </small></p>
+        </div>
+    </div>
+
+
     
-
-
-    <img src= '<%= data.image %>' class="card-img-top" alt="...">
-<h1> <%= data.title %> </h1>
-<p> <%= data.body %> </p>
+    
+    
+    
+    
+    
 
 
 

@@ -2,7 +2,7 @@ const express = require("express")
 const postRoute = require("./controllers/post")
 const app = express()
 app.set("view engine", "ejs")
-app.use(express.static("public"))
+app.use(express.static("public/"))
 
 app.use("/", postRoute)
 
