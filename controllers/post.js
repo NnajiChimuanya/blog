@@ -4,6 +4,7 @@ const express = require("express")
 
 const multer = require("multer")
 
+//setting the storage location for the uploade image
 const storage = multer.diskStorage({
     destination : function(req, file, cb) {
         cb(null, "./public/images/")
@@ -27,11 +28,6 @@ try {
     console.log(error)
 }
 
-
-
-
-
-
 router.get("/", (req, res) => {
     posts.find({}, (err, data) => {
         if(err) throw err
@@ -45,36 +41,28 @@ router.post("/newPost", upload.single("uploadedImage"),  (req, res) => {
     let title = req.body.title
     let body = req.body.body
 
-    console.log(req.file, req.body)
+    console.log(req.body)
 
     let post = new posts({
         image : req.file.filename,
         title : title,
         body : body
+        
     })
     post.save((err, data) => {
         if(err) throw err
-        res.redirect(`/post/${data._id}`)
+        res.redirect(`/post/${data.slug}`)
     })
 } )
 
-router.get("/post/:id", async (req, res) => {
-    let id = req.params.id
-
-    if(mongoose.Types.ObjectId.isValid(id)) {
-        posts.findById(id, (err, data) => {
-            if(err) throw err
-            console.log(data)
-            res.render("post", { data : data})
-            
-        })
-    }
-
-
-   
+router.get("/post/:slug", async (req, res) => {
+    let slug = req.params.slug
+    posts.findOne({slug : slug}, (err, data) => {
+        if(err) throw err
+        console.log(data)
+        res.render("post", { data : data})
         
-        
-    
+    })
     
 })
 
